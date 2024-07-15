@@ -1,0 +1,137 @@
+Spirally traversing a matrix
+Given a matrix of size r*c, where r is number of rows and c is number of columns. Traverse the matrix in spiral form.
+
+Input Format
+Input consists of two lines
+
+The first line contains two integers r and c which denotes number of rows and columns respectively.
+
+The next r lines contains c spaced integers, which are the elements of the matrix.
+
+Output Format
+Print the spiral matrix.
+
+Example 1
+Input
+
+4 4
+1 2 3 4
+5 6 7 8
+9 10 11 12
+13 14 15 16
+Output
+
+1 2 3 4 8 12 16 15 14 13 9 5 6 7 11 10
+Explanation:
+
+We iterate spirally and print each element.
+
+Example 2
+Input
+
+3 4  
+1 2 3 4
+5 6 7 8
+9 10 11 12
+Output
+
+1 2 3 4 8 12 11 10 9 5 6 7
+Explanation:
+
+We iterate spirally and print each element.
+
+Constraints
+1 <= r, c <= 100
+
+0 <= matrix[i][j] <= 100
+
+Topics
+2D-Arrays
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n, m;
+        n = sc.nextInt();
+        m = sc.nextInt();
+        int [][]mat=new int[n][m];
+        for(int i=0;i<n;++i){
+            for(int j=0;j<m;++j){
+                mat[i][j]=sc.nextInt();
+            }
+        }
+
+        spirallyTraverse(mat);     
+        System.out.println('\n');
+    }
+
+    public static void spirallyTraverse(int [][]mat) {
+        
+        // m - number of rows
+        int m = mat.length;
+        
+        // n - number of columns 
+        int n = mat[0].length; 
+        
+        int top = 0;
+        int bottom = m - 1;  
+        int left = 0;
+        int right = n - 1;
+        
+        while(top <= bottom && left <= right)
+        {
+            boolean isFirstArrowPrinting = false;
+        
+            // STEP 1 --> PRINT first row (left to right) (topmost row)
+            for(int i=left; i<=right; i++)
+            {
+                isFirstArrowPrinting = true;
+                System.out.print(mat[top][i] + " ");
+            }
+            
+            if(isFirstArrowPrinting == true)
+            {
+                boolean isSecondArrowPrinting = false;
+                
+                // STEP 2 --> PRINT Last Column (top to bottom)
+                for(int i=top+1; i<=bottom; i++)
+                {
+                    isSecondArrowPrinting = true;
+                    System.out.print(mat[i][right] + " ");
+                }
+                
+                if(isSecondArrowPrinting == true)
+                {
+                    boolean isThirdArrowRunning = false;
+                    
+                    // STEP 3 --> PRINT last row (right to left)
+                    for(int i=right-1; i>=left; i=i-1)
+                    {
+                        isThirdArrowRunning = true;
+                        System.out.print(mat[bottom][i] + " ");
+                    }
+                    
+                    if(isThirdArrowRunning == true)
+                    {
+                        // STEP 4 --> PRINT first column (bottom to top)
+                        for(int i=bottom-1; i>=top+1; i=i-1)
+                        {
+                            System.out.print(mat[i][left] + " ");
+                        }
+                    }
+                }
+            } 
+            
+            top = top + 1;
+            bottom = bottom - 1;
+            
+            left = left + 1;
+            right = right - 1;
+        }
+     
+    }
+}
+
